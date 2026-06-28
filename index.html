@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#062b5f" />
+  <link rel="manifest" href="manifest.json" />
+  <title>Hombro Trainer</title>
+  <style>
+    :root{--blue:#062b5f;--blue2:#0d4f9a;--bg:#f4f7fb;--card:#fff;--muted:#65758b;--good:#15a66a;--warn:#df8e00;--bad:#d94444;--line:#d9e3f0}
+    *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:#0d1b2a}button,input,select{font:inherit}button{border:0;border-radius:14px;padding:12px 14px;font-weight:700;background:var(--blue);color:white;cursor:pointer}button.secondary{background:#e9eef7;color:var(--blue)}button.good{background:var(--good)}button.warn{background:var(--warn)}button.bad{background:var(--bad)}button:disabled{opacity:.45}.top{position:sticky;top:0;z-index:10;background:linear-gradient(135deg,var(--blue),#0a3c82);color:white;padding:18px 18px 14px;box-shadow:0 8px 24px rgba(0,0,0,.16)}.top h1{margin:0;font-size:22px}.top p{margin:4px 0 0;color:#dce9ff;font-size:13px}.tabs{display:flex;gap:8px;margin-top:14px}.tabs button{flex:1;background:rgba(255,255,255,.14);padding:10px}.tabs button.active{background:white;color:var(--blue)}main{max-width:980px;margin:0 auto;padding:16px}.screen{display:none}.screen.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 8px 22px rgba(13,37,63,.06)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.02em}input,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:white;color:#0d1b2a}.exercise{display:grid;grid-template-columns:92px 1fr;gap:12px;align-items:center}.thumb{width:92px;height:72px;object-fit:cover;border-radius:14px;background:#e8eef6;border:1px solid var(--line)}.exercise h3{margin:0;font-size:17px}.exercise p{margin:4px 0 0;color:var(--muted);font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.small{font-size:12px;padding:8px 10px;border-radius:10px}.hint{font-size:13px;color:var(--muted);line-height:1.35}.workout{min-height:calc(100vh - 136px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.phase{display:inline-block;border-radius:999px;padding:7px 12px;background:#e9eef7;color:var(--blue);font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}.timer{font-size:76px;font-weight:900;line-height:1;margin:12px 0;color:var(--blue)}.current-img{width:min(94vw,620px);height:min(44vh,360px);object-fit:cover;border-radius:22px;border:1px solid var(--line);background:white;box-shadow:0 10px 28px rgba(0,0,0,.12)}.current-name{font-size:26px;font-weight:900;margin:14px 0 4px}.meta{color:var(--muted);font-size:15px}.progress-wrap{width:min(92vw,620px);height:12px;border-radius:999px;background:#dce5f1;overflow:hidden;margin:16px 0}.progress{height:100%;width:0;background:var(--blue2);transition:width .2s linear}.big-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}.poster{width:100%;border-radius:16px;border:1px solid var(--line)}.footer-space{height:24px}.empty{padding:26px;text-align:center;color:var(--muted)}@media(max-width:700px){.row,.row3{grid-template-columns:1fr}.exercise{grid-template-columns:82px 1fr}.thumb{width:82px;height:66px}.timer{font-size:64px}.top h1{font-size:20px}main{padding:12px}.card{border-radius:16px}.current-name{font-size:22px}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <h1>Hombro Trainer</h1>
+    <p>Configura tiempos, repeticiones y series. La app avanza sola.</p>
+    <div class="tabs">
+      <button id="tabPlan" class="active">Rutina</button>
+      <button id="tabTrain">Entrenar</button>
+      <button id="tabPoster">Imagen</button>
+    </div>
+  </header>
+  <main>
+    <section id="plan" class="screen active">
+      <div class="card">
+        <div class="row3">
+          <div><label>Preparación inicial</label><input id="prepSeconds" type="number" min="0" value="5"></div>
+          <div><label>Descanso entre ejercicios</label><input id="betweenSeconds" type="number" min="0" value="20"></div>
+          <div><label>Modo audio</label><select id="audioMode"><option value="voice">Voz + pitido</option><option value="beep">Solo pitido</option><option value="off">Sin audio</option></select></div>
+        </div>
+        <div class="actions"><button id="addBtn">+ Añadir ejercicio</button><button id="resetBtn" class="secondary">Restaurar rutina hombro</button><button id="clearBtn" class="bad">Borrar todo</button></div>
+        <p class="hint">Consejo: para un ejercicio por repeticiones, pon también unos segundos aproximados por serie. Así la app puede avanzar automáticamente. Si pones tiempo 0, tendrás que tocar “Completar serie”.</p>
+      </div>
+      <div id="list"></div>
+    </section>
+
+    <section id="train" class="screen">
+      <div id="trainIdle" class="card">
+        <h2>Entrenamiento listo</h2>
+        <p class="hint">Pulsa empezar y la app irá ejercicio por ejercicio, serie por serie, con descanso automático.</p>
+        <button id="startBtn" class="good">Empezar entrenamiento</button>
+      </div>
+      <div id="workout" class="workout" style="display:none">
+        <span id="phase" class="phase">Preparación</span>
+        <div id="timer" class="timer">00</div>
+        <img id="currentImg" class="current-img" src="assets/apoyo_lateral.png" alt="Ejercicio actual">
+        <div id="currentName" class="current-name">Apoyo lateral</div>
+        <div id="currentMeta" class="meta">Serie 1/2 · 10 repeticiones</div>
+        <div class="progress-wrap"><div id="progress" class="progress"></div></div>
+        <div class="big-actions">
+          <button id="pauseBtn" class="secondary">Pausar</button>
+          <button id="nextBtn" class="warn">Siguiente</button>
+          <button id="finishBtn" class="bad">Terminar</button>
+        </div>
+      </div>
+      <div id="done" class="card" style="display:none;text-align:center">
+        <h2>Entrenamiento completado</h2>
+        <p class="hint">Buen trabajo. Revisa sensaciones del hombro antes de subir carga o dificultad.</p>
+        <button id="againBtn">Repetir</button>
+      </div>
+    </section>
+
+    <section id="poster" class="screen">
+      <div class="card">
+        <img class="poster" src="assets/poster_hombro.png" alt="Tabla de ejercicios para el hombro">
+      </div>
+    </section>
+    <div class="footer-space"></div>
+  </main>
+
+<script>
+const $=id=>document.getElementById(id);
+const defaults=[
+ {name:'Apoyo lateral',sets:2,reps:10,seconds:30,rest:30,img:'assets/apoyo_lateral.png',note:'Mantén cuerpo alineado y hombro estable.'},
+ {name:'Presión en pared',sets:2,reps:12,seconds:30,rest:25,img:'assets/presion_pared.png',note:'Presiona suave, sin encoger el cuello.'},
+ {name:'Estabilidad con balón',sets:2,reps:10,seconds:35,rest:30,img:'assets/estabilidad_balon.png',note:'Controla tronco, escápula y respiración.'},
+ {name:'Apoyo unilateral',sets:2,reps:8,seconds:25,rest:30,img:'assets/apoyo_unilateral.png',note:'Mano firme al suelo, evita rotar el tronco.'}
+];
+let state=JSON.parse(localStorage.getItem('hombroTrainer')||'null')||{prepSeconds:5,betweenSeconds:20,audioMode:'voice',exercises:defaults};
+let sequence=[],step=-1,remaining=0,total=0,tick=null,paused=false,audioCtx=null;
+function save(){state.prepSeconds=+$('prepSeconds').value||0;state.betweenSeconds=+$('betweenSeconds').value||0;state.audioMode=$('audioMode').value;localStorage.setItem('hombroTrainer',JSON.stringify(state));}
+function render(){ $('prepSeconds').value=state.prepSeconds; $('betweenSeconds').value=state.betweenSeconds; $('audioMode').value=state.audioMode; const list=$('list'); list.innerHTML=''; if(!state.exercises.length){list.innerHTML='<div class="card empty">No hay ejercicios. Añade uno para empezar.</div>'; return;} state.exercises.forEach((ex,i)=>{const div=document.createElement('div'); div.className='card'; div.innerHTML=`<div class="exercise"><img class="thumb" src="${ex.img||''}" onerror="this.src='assets/poster_hombro.png'" alt="${ex.name}"><div><h3>${i+1}. ${ex.name}</h3><p>${ex.sets} series · ${ex.reps||0} reps · ${ex.seconds||0}s · descanso ${ex.rest||0}s</p></div></div><div class="row3" style="margin-top:12px"><div><label>Nombre</label><input data-k="name" value="${esc(ex.name)}"></div><div><label>Series</label><input type="number" min="1" data-k="sets" value="${ex.sets}"></div><div><label>Repeticiones</label><input type="number" min="0" data-k="reps" value="${ex.reps}"></div><div><label>Segundos por serie</label><input type="number" min="0" data-k="seconds" value="${ex.seconds}"></div><div><label>Descanso después</label><input type="number" min="0" data-k="rest" value="${ex.rest}"></div><div><label>Imagen</label><input type="file" accept="image/*" data-k="file"></div></div><div style="margin-top:10px"><label>Nota técnica</label><input data-k="note" value="${esc(ex.note||'')}"></div><div class="actions"><button class="small secondary" data-act="up">↑ Subir</button><button class="small secondary" data-act="down">↓ Bajar</button><button class="small bad" data-act="delete">Eliminar</button></div>`; list.appendChild(div); div.querySelectorAll('input[data-k],select[data-k]').forEach(inp=>{inp.addEventListener('change',ev=>{const k=inp.dataset.k;if(k==='file'){const f=inp.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ex.img=r.result; save(); render();}; r.readAsDataURL(f);return;} ex[k]=['sets','reps','seconds','rest'].includes(k)?(+inp.value||0):inp.value; save(); render();});}); div.querySelectorAll('button[data-act]').forEach(b=>b.onclick=()=>{const a=b.dataset.act;if(a==='delete')state.exercises.splice(i,1);if(a==='up'&&i>0)[state.exercises[i-1],state.exercises[i]]=[state.exercises[i],state.exercises[i-1]];if(a==='down'&&i<state.exercises.length-1)[state.exercises[i+1],state.exercises[i]]=[state.exercises[i],state.exercises[i+1]];save();render();}); });}
+function esc(s){return String(s||'').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
+function buildSequence(){save(); let seq=[]; if(state.prepSeconds>0)seq.push({type:'prep',name:'Preparación',seconds:state.prepSeconds,img:'assets/poster_hombro.png'}); state.exercises.forEach((ex,ei)=>{for(let s=1;s<=Math.max(1,ex.sets);s++){seq.push({type:'work',ex,ei,set:s,sets:ex.sets,seconds:+ex.seconds||0}); if(s<ex.sets && ex.rest>0)seq.push({type:'rest',ex,ei,set:s,seconds:+ex.rest});} if(state.betweenSeconds>0)seq.push({type:'between',name:'Cambio de ejercicio',seconds:state.betweenSeconds});}); if(seq[seq.length-1]?.type==='between')seq.pop(); return seq;}
+function start(){sequence=buildSequence(); step=-1; $('trainIdle').style.display='none'; $('done').style.display='none'; $('workout').style.display='flex'; next();}
+function next(){clearInterval(tick); step++; if(step>=sequence.length){finish(true);return;} const item=sequence[step]; total=remaining=Math.max(0,item.seconds||0); paused=false; $('pauseBtn').textContent='Pausar'; updateView(); announce(); if(total>0){tick=setInterval(()=>{if(paused)return; remaining--; updateView(); if([3,2,1].includes(remaining)) beep(700,80); if(remaining<=0)next();},1000);} else {$('timer').textContent='Manual'; $('progress').style.width='0%';}}
+function updateView(){const item=sequence[step]; let phase=''; if(item.type==='prep')phase='Preparación'; if(item.type==='work')phase='Trabajo'; if(item.type==='rest')phase='Descanso'; if(item.type==='between')phase='Cambio'; $('phase').textContent=phase; if(item.type==='work'){ $('currentName').textContent=item.ex.name; $('currentMeta').textContent=`Serie ${item.set}/${item.sets} · ${item.ex.reps||0} repeticiones · ${item.ex.note||''}`; $('currentImg').src=item.ex.img||'assets/poster_hombro.png'; } else { $('currentName').textContent=item.name || (item.ex?`Descanso: ${item.ex.name}`:'Descanso'); $('currentMeta').textContent=item.ex?`Después de la serie ${item.set}`:'Prepárate'; $('currentImg').src=item.ex?.img||'assets/poster_hombro.png'; } $('timer').textContent=String(remaining).padStart(2,'0'); $('progress').style.width= total?`${Math.max(0,Math.min(100,(total-remaining)/total*100))}%`:'0%';}
+function finish(done=false){clearInterval(tick); $('workout').style.display='none'; $('trainIdle').style.display=done?'none':'block'; $('done').style.display=done?'block':'none'; if(done){speak('Entrenamiento completado'); beep(900,180);}}
+function speak(txt){if(state.audioMode!=='voice'||!('speechSynthesis'in window))return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(txt); u.lang='es-ES'; u.rate=1; speechSynthesis.speak(u)}
+function beep(freq=600,dur=100){if(state.audioMode==='off')return; audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.frequency.value=freq; o.connect(g); g.connect(audioCtx.destination); g.gain.setValueAtTime(.001,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(.16,audioCtx.currentTime+.01); g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur/1000); o.start(); o.stop(audioCtx.currentTime+dur/1000+.02)}
+function announce(){const item=sequence[step]; if(item.type==='work')speak(`${item.ex.name}. Serie ${item.set} de ${item.sets}. ${item.ex.reps||0} repeticiones.`); else speak(item.name||'Descanso'); beep(600,120)}
+function tab(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active')); if(id==='plan')$('tabPlan').classList.add('active'); if(id==='train')$('tabTrain').classList.add('active'); if(id==='poster')$('tabPoster').classList.add('active');}
+$('tabPlan').onclick=()=>tab('plan'); $('tabTrain').onclick=()=>tab('train'); $('tabPoster').onclick=()=>tab('poster');
+$('addBtn').onclick=()=>{state.exercises.push({name:'Nuevo ejercicio',sets:2,reps:10,seconds:30,rest:30,img:'assets/poster_hombro.png',note:''});save();render();};
+$('resetBtn').onclick=()=>{state.exercises=JSON.parse(JSON.stringify(defaults));save();render();}; $('clearBtn').onclick=()=>{if(confirm('¿Borrar todos los ejercicios?')){state.exercises=[];save();render();}};
+$('prepSeconds').onchange=save; $('betweenSeconds').onchange=save; $('audioMode').onchange=save; $('startBtn').onclick=start; $('againBtn').onclick=start; $('nextBtn').onclick=next; $('finishBtn').onclick=()=>finish(false); $('pauseBtn').onclick=()=>{paused=!paused;$('pauseBtn').textContent=paused?'Continuar':'Pausar';};
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});} render();
+</script>
+</body>
+</html>

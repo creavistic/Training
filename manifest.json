@@ -1,0 +1,9 @@
+{
+  "name":"Hombro Trainer",
+  "short_name":"Hombro",
+  "start_url":"index.html",
+  "display":"standalone",
+  "background_color":"#f4f7fb",
+  "theme_color":"#062b5f",
+  "icons":[{"src":"assets/poster_hombro.png","sizes":"512x512","type":"image/png","purpose":"any"}]
+}
