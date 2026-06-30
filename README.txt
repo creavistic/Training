@@ -1,14 +1,15 @@
 STRONG SMART BETTER PRO TRAINER
 
-Archivos para GitHub Pages:
-- index.html
-- manifest.json
-- sw.js
-- assets/
+Versión mejorada gris/negro/lima.
 
-Para actualizar tu app:
-1. Sube index.html, manifest.json y sw.js a la raíz del repositorio.
-2. Sube/actualiza la carpeta assets.
-3. GitHub Pages se actualizará solo en 1-3 minutos.
+Cambios importantes:
+- Diseño más limpio y profesional.
+- Las repeticiones bajan automáticamente según el promedio segundos/reps.
+  Ejemplo: 10 reps en 50 segundos = baja 1 repetición cada 5 segundos.
+- Service worker actualizado a v3 para evitar caché antigua.
 
-Diseño basado en la maqueta amarilla/negra con fuente Montserrat.
+Sube a GitHub Pages estos archivos en la raíz del repositorio:
+index.html
+manifest.json
+sw.js
+assets/
