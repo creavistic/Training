@@ -2,7 +2,7 @@
   "name":"BN Pro Trainer",
   "short_name":"Pro Trainer",
   "description":"Temporizador configurable de ejercicios de hombro.",
-  "start_url":"./index.html?v=7",
+  "start_url":"./index.html?v=9",
   "scope":"./",
   "display":"standalone",
   "orientation":"portrait",

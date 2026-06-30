@@ -1,4 +1,4 @@
-const CACHE = 'ssb-pro-trainer-v7';
+const CACHE = 'ssb-pro-trainer-v9';
 const ASSETS = [
   './','./index.html','./manifest.json','./sw.js',
   './assets/apoyo_lateral_raw.jpg','./assets/presion_pared_raw.jpg','./assets/estabilidad_balon_raw.jpg','./assets/apoyo_unilateral_raw.jpg',
