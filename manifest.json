@@ -2,12 +2,12 @@
   "name":"BN Pro Trainer",
   "short_name":"Pro Trainer",
   "description":"Temporizador configurable de ejercicios de hombro.",
-  "start_url":"./index.html?v=11",
+  "start_url":"./index.html?v=13",
   "scope":"./",
   "display":"standalone",
   "orientation":"portrait",
-  "background_color":"#d4d4d4",
-  "theme_color":"#d4d4d4",
+  "background_color":"#dedede",
+  "theme_color":"#dedede",
   "icons":[
     {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png"},
     {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png"}
